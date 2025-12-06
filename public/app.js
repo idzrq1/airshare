@@ -1,6 +1,11 @@
 // public/app.js
 document.addEventListener('DOMContentLoaded', () => {
-  // عناصر الواجهة
+  // ================= إعداد رابط السيرفر =================
+  // غيّر هذا للرابط اللي يعطيك هو Render
+  // مثال: const SERVER_URL = "https://airshare-api.onrender.com";
+  const SERVER_URL = "https://YOUR-RENDER-APP.onrender.com";
+
+  // ================= عناصر الواجهة =================
   const dropzone = document.getElementById('dropzone');
   const fileInput = document.getElementById('fileInput');
   const browseBtn = document.getElementById('browseBtn');
@@ -17,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPeers = {};
   let socket = null;
 
-  // === تهيئة اسم الجهاز من localStorage ===
+  // ================= اسم الجهاز =================
   let deviceName = localStorage.getItem('deviceName');
   if (!deviceName) {
     deviceName = `جهازي - ${navigator.platform}`;
@@ -25,21 +30,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   deviceNameInput.value = deviceName;
 
-  // وظيفة رسائل
   function showMessage(text, type = 'info') {
     messageArea.textContent = text;
     messageArea.className = 'message ' + type;
   }
 
-  // === الاتصال بـ Socket.IO ===
-  socket = io();
+  // ================= الاتصال بـ Socket.IO =================
+  // نستخدم سيرفر خارجي بدل localhost
+  socket = io(SERVER_URL, {
+    transports: ['websocket', 'polling']
+  });
 
   socket.on('connect', () => {
     connectionStatus.textContent = '• متصل بالسيرفر';
     connectionStatus.classList.remove('disconnected');
     connectionStatus.classList.add('connected');
 
-    // نعلن عن أنفسنا
     socket.emit('announce', { name: deviceNameInput.value.trim() || deviceName });
   });
 
@@ -69,12 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePeerList(Object.values(currentPeers));
   });
 
-  // استقبال ملف وارد
+  // استلام ملف من السيرفر
   socket.on('file-received', (payload) => {
     addIncomingFile(payload);
   });
 
-  // === تعديل اسم الجهاز ===
+  // ================= تعديل اسم الجهاز =================
   function handleNameUpdate() {
     const newName = deviceNameInput.value.trim();
     if (newName && newName !== deviceName) {
@@ -94,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // === سحب/اختيار ملف ===
+  // ================= اختيار / سحب الملف =================
   browseBtn.addEventListener('click', (e) => {
     e.preventDefault();
     fileInput.click();
@@ -137,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showMessage('الملف جاهز، اختر جهاز من القائمة لإرساله.', 'info');
   }
 
-  // === تحديث قائمة الأجهزة ===
+  // ================= قائمة الأجهزة =================
   function updatePeerList(peersArray) {
     peerList.innerHTML = '';
 
@@ -171,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // === إرسال الملف لجهاز معين ===
+  // ================= إرسال الملف لجهاز معيّن =================
   async function sendFileToPeer(peerId, peerName) {
     if (!socket || !socket.connected) {
       showMessage('غير متصل بالسيرفر.', 'error');
@@ -191,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('fromPeerId', socket.id);
 
     try {
-      const res = await fetch('/upload-peer', {
+      const res = await fetch(`${SERVER_URL}/upload-peer`, {
         method: 'POST',
         body: formData
       });
@@ -209,9 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // === إضافة ملف وارد إلى صندوق الوارد (مع تحميل فعلي) ===
+  // ================= إضافة ملف وارد للصندوق =================
   function addIncomingFile(payload) {
-    // نحذف النص الفاضي لو موجود
     const empty = inbox.querySelector('.empty-inbox');
     if (empty) empty.remove();
 
@@ -228,15 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
     meta.textContent = `من: ${payload.fromName} • الحجم: ${sizeMB} MB`;
 
     const link = document.createElement('a');
-    // نفضل رابط /download لأنه يفرض التحميل
-    link.href = payload.downloadUrl || payload.url;
+    // السيرفر يرسل url نسبي مثل /download/xxx → نضيف عليه SERVER_URL
+    const href = payload.downloadUrl
+      ? `${SERVER_URL}${payload.downloadUrl}`
+      : `${SERVER_URL}${payload.url}`;
+
+    link.href = href;
     link.className = 'secondary-btn small';
     link.textContent = 'تحميل الملف';
-
-    // هذا السطر يجبر المتصفح يحاول يحفظ الملف بدال ما يفتحه
     link.setAttribute('download', payload.originalName || 'file');
-    // target مو ضروري هنا، نخليه يحمّل في نفس التبويب
-    // link.target = '_self';
 
     card.appendChild(title);
     card.appendChild(meta);

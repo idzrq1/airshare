@@ -1,67 +1,65 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AirShare - مشاركة عبر الواي فاي</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirShare</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Socket.IO من CDN -->
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-  <div class="main-container">
-    <!-- منطقة رفع / اختيار الملف -->
-    <div class="upload-area">
-      <h1>AirShare</h1>
-      <p class="subtitle">شارك الملفات مع الأجهزة في نفس الشبكة</p>
+    <div class="container">
 
-      <div id="dropzone" class="dropzone">
-        <div class="drop-inner">
-          <div class="icon">📤</div>
-          <p><strong>اسحب الملف هنا</strong></p>
-          <p class="or">أو</p>
-          <button id="browseBtn" class="primary-btn">تصفح الملفات</button>
-          <input type="file" id="fileInput" style="display: none" />
-        </div>
-      </div>
+        <!-- ===================== العنوان ===================== -->
+        <header class="header">
+            <h1 class="logo">AirShare</h1>
+            <div class="device-name-box">
+                <label>اسم جهازي:</label>
+                <input id="deviceNameInput" type="text" placeholder="اسم الجهاز" />
+            </div>
+            <div id="connectionStatus" class="status disconnected">• غير متصل</div>
+        </header>
 
-      <div id="fileStatus" class="file-status" style="display: none;">
-        <div class="file-info">
-          <span id="fileName"></span>
-          <span id="fileSize"></span>
-        </div>
-        <p class="hint">اختر جهاز من القائمة على اليمين لإرسال هذا الملف إليه.</p>
-      </div>
+        <!-- ===================== قسم رفع الملفات ===================== -->
+        <section class="upload-section">
+            <h2>ارفع ملف</h2>
 
-      <p id="messageArea" class="message"></p>
+            <div id="dropzone" class="dropzone">
+                <p>اسحب الملف هنا أو</p>
+                <button id="browseBtn" class="primary-btn">اختر ملف</button>
+                <input type="file" id="fileInput" hidden />
+            </div>
+
+            <div id="fileStatus" class="file-status" style="display: none;">
+                <span id="fileName"></span><br>
+                <span id="fileSize"></span>
+            </div>
+
+            <div id="messageArea" class="message"></div>
+        </section>
+
+        <!-- ===================== الأجهزة ===================== -->
+        <section class="peers-section">
+            <h2>الأجهزة المتصلة</h2>
+            <ul id="peerList" class="peer-list"></ul>
+        </section>
+
+        <!-- ===================== الملفات الواردة ===================== -->
+        <section class="inbox-section">
+            <h2>الملفات الواردة</h2>
+
+            <div id="inbox" class="inbox">
+                <div class="empty-inbox">لا توجد ملفات مستلمة.</div>
+            </div>
+        </section>
+
     </div>
 
-    <!-- منطقة الأجهزة القريبة / الملفات الواردة -->
-    <div class="peers-area">
-      <h2>الأجهزة القريبة</h2>
+    <!-- سكربت الواجهة -->
+    <script src="app.js"></script>
 
-      <div class="name-input-area">
-        <label for="deviceNameInput">اسم جهازي:</label>
-        <input type="text" id="deviceNameInput" placeholder="مثلاً: لابتوب الصالة" />
-      </div>
-
-      <div id="connectionStatus" class="connection-status disconnected">
-        • جاري الاتصال بالسيرفر...
-      </div>
-
-      <ul id="peerList" class="peer-list">
-        <li class="empty-state">لا توجد أجهزة قريبة حالياً.</li>
-      </ul>
-
-      <h3 class="inbox-title">الملفات الواردة</h3>
-      <div id="inbox" class="inbox">
-        <p class="empty-inbox">لا توجد ملفات مستلمة بعد.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Socket.IO -->
-  <script src="/socket.io/socket.io.js"></script>
-  <!-- منطق الواجهة -->
-  <script src="app.js"></script>
 </body>
 </html>
