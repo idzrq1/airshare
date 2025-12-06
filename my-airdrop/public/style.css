@@ -1,0 +1,211 @@
+/* =============== إعادة ضبط =============== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tajawal", sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #333;
+    direction: rtl;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+/* =============== الهيدر =============== */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #007bff;
+}
+
+.device-name-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.device-name-box input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    width: 180px;
+}
+
+/* =============== حالة الاتصال =============== */
+
+.status {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.status.connected {
+    color: #28a745;
+}
+
+.status.disconnected {
+    color: #dc3545;
+}
+
+/* =============== قسم رفع الملفات =============== */
+
+.upload-section,
+.peers-section,
+.inbox-section {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #e3e7ed;
+}
+
+.upload-section h2,
+.peers-section h2,
+.inbox-section h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* دروب زون */
+.dropzone {
+    border: 2px dashed #007bff70;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #f8fbff;
+}
+
+.dropzone.dragover {
+    background: #e4f1ff;
+    border-color: #007bff;
+}
+
+.dropzone button {
+    margin-top: 10px;
+}
+
+/* عرض حالة الملف */
+.file-status {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* =============== الأزرار =============== */
+
+.primary-btn,
+.secondary-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.primary-btn {
+    background: #007bff;
+    color: white;
+}
+
+.primary-btn:hover {
+    background: #006ae6;
+}
+
+.secondary-btn {
+    background: #eee;
+}
+
+.secondary-btn:hover {
+    background: #ddd;
+}
+
+.small {
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+/* =============== الرسائل =============== */
+
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.message.info {
+    background: #e8f4ff;
+    color: #0366c4;
+}
+
+.message.success {
+    background: #eaf8ee;
+    color: #2e8b57;
+}
+
+.message.error {
+    background: #ffeaea;
+    color: #d93025;
+}
+
+/* =============== قائمة الأجهزة =============== */
+
+.peer-list {
+    list-style: none;
+}
+
+.peer-item {
+    display: flex;
+    justify-content: space-between;
+    background: #f7f9fc;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #e3e7ed;
+}
+
+/* =============== الملفات الواردة =============== */
+
+.inbox .file-card {
+    background: #f7f9fc;
+    border: 1px solid #e3e7ed;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.file-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.file-meta {
+    margin-bottom: 8px;
+    color: #666;
+}
+
+/* النص إذا ما فيه ملفات */
+.empty-inbox {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
