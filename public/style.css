@@ -1,0 +1,282 @@
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --bg: #f5f5f7;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --success: #16a34a;
+  --error: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Cairo", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #eef2ff, #f9fafb);
+  color: var(--text);
+  direction: rtl;
+}
+
+.main-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: 2fr 1.4fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.upload-area,
+.peers-area {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.subtitle {
+  margin-top: 6px;
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.dropzone {
+  border: 2px dashed var(--primary);
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  background: #f5f3ff;
+  transition: 0.2s;
+}
+
+.dropzone.dragover {
+  background: #e0e7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+}
+
+.drop-inner .icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.drop-inner .or {
+  margin: 6px 0;
+  color: var(--muted);
+}
+
+.primary-btn,
+.secondary-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.primary-btn:hover {
+  background: var(--primary-dark);
+}
+
+.primary-btn.small,
+.secondary-btn.small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.secondary-btn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.secondary-btn:hover {
+  background: #d1d5db;
+}
+
+.file-status {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.file-info span:first-child {
+  font-weight: 600;
+}
+
+.file-info span:last-child {
+  color: var(--muted);
+}
+
+.hint {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.message {
+  margin-top: 14px;
+  font-size: 0.9rem;
+}
+
+.message.info {
+  color: var(--muted);
+}
+
+.message.success {
+  color: var(--success);
+}
+
+.message.error {
+  color: var(--error);
+}
+
+/* Peers area */
+
+.peers-area h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.name-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.name-input-area input {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.name-input-area input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.3);
+}
+
+.connection-status {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.connection-status.connected {
+  color: var(--success);
+}
+
+.connection-status.disconnected {
+  color: var(--error);
+}
+
+.peer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.peer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.peer-item span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+/* Inbox */
+
+.inbox-title {
+  margin: 10px 0 6px;
+  font-size: 1rem;
+}
+
+.inbox {
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 12px;
+  border: 1px dashed #e5e7eb;
+  padding: 8px;
+  background: #f9fafb;
+}
+
+.empty-inbox {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 8px 0;
+}
+
+.file-card {
+  background: white;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.file-title {
+  font-weight: 600;
+}
+
+.file-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 4px 0 6px;
+}
+
+@media (max-width: 900px) {
+  .main-container {
+    grid-template-columns: 1fr;
+    margin: 20px auto;
+  }
+}
